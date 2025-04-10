@@ -1,0 +1,24 @@
+{% load static %}
+<div id="myDIV" class="header">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'shopping_list/styles.css' %}"/>
+  <h1> Můj nákupní seznam: </h1>
+    <h3> Níže zadejte položky, které chcete přidat do seznamu. Kliknutím na položku ji označíte jako dokončenou. Položku můžete smazat kliknutím na 'X' nebo můžete vymazat celý seznam výběrem 'Vymazat seznam'. </h3>
+  <form action = "{% url 'add' %}" method = "POST" role = "form">
+  {% csrf_token %}
+  {{ form.text }}
+  </form>
+</div>
+
+<ul id="myUL">
+  {% for item in list %}
+  	  {% if item.complete %}
+	     <li class="checked">{{ item.text }} <a href = "{% url 'deleteitem' item.id %}"><span class="close"> X </span></a> </li>
+	  {% else %}
+	    <li> <a href = "{% url 'complete' item.id %}"> {{ item.text }} </a> <a href = "{% url 'deleteitem' item.id %}"><span class="close"> X </span></a></li>
+	  {% endif %}  
+  {% endfor %}
+</ul>
+<a href = "{% url 'deleteall' %}""><span class="clearlist"> Vymazat seznam</span></a>
+
+
