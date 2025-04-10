@@ -16,7 +16,7 @@ Jednoduchá webová aplikace pro správu nákupního seznamu, vytvořená v Djan
 ### 1. Klonuj nebo stáhni projekt
 
 ```bash
-git clone https://github.com/korkus18/shoppping_list.git
+git clone https://github.com/korkus18/Django-Shopping-List.git
 cd shoppping_list-list
 ```
 
