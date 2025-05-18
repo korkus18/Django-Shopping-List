@@ -1,3 +1,23 @@
+<!--
+Main Shopping List Template
+
+This template extends the base template and provides the main shopping list interface.
+It includes:
+- Item listing grouped by categories
+- Add item functionality
+- Edit item functionality
+- Image preview functionality
+- Category-specific styling
+- Interactive UI elements
+
+Features:
+- Responsive grid layout for categories
+- Modal forms for adding/editing items
+- Image upload and preview
+- Category color coding
+- Completion status tracking
+-->
+
 {% extends 'base.html' %}
 {% load static %}
 {% load custom_filters %}
@@ -5,7 +25,9 @@
 {% block title %}Shopping List{% endblock %}
 
 {% block content %}
+<!-- Main container -->
 <div class="container py-4">
+    <!-- Header section with add item button -->
     <div class="header mb-5">
         <h1 class="display-4 text-center mb-4">NÁKUPNÍ SEZNAM</h1>
         <div class="text-center mb-4">
@@ -16,24 +38,30 @@
     </div>
 
     {% if items_saved %}
+    <!-- Categories grid container -->
     <div class="categories-container">
         {% for category, items in items_by_category.items %}
+        <!-- Individual category section -->
         <div class="category-section mb-4">
             <div class="category-header" data-category="{{ category }}">
                 <h3 class="category-title">{{ category_names|get_item:category }}</h3>
             </div>
+            <!-- Items list within category -->
             <div class="category-items">
                 {% for item in items %}
                 <div class="item-row {% if item.completed %}completed{% endif %}" data-item-id="{{ item.id }}">
+                    <!-- Item checkbox and details -->
                     <div class="form-check d-flex align-items-center">
                         <input type="checkbox" class="form-check-input me-3" {% if item.completed %}checked{% endif %} 
                                onclick="window.location.href='{% url 'complete' item.id %}'">
                         <label class="form-check-label flex-grow-1 d-flex align-items-center">
+                            <!-- Item image thumbnail if exists -->
                             {% if item.image %}
                             <div class="item-thumbnail me-3 cursor-pointer" onclick="openImagePreview('{{ item.image.url }}', '{{ item.itemname }}')">
                                 <img src="{{ item.image.url }}" alt="{{ item.itemname }}" class="rounded">
                             </div>
-        {% endif %}
+                            {% endif %}
+                            <!-- Item name with edit modal trigger -->
                             <a href="#" class="item-name text-decoration-none {% if item.completed %}text-muted text-decoration-line-through{% endif %} item-detail-link"
                                data-bs-toggle="modal" 
                                data-bs-target="#itemDetailModal" 
@@ -46,6 +74,7 @@
                                 {{ item.itemname }}
                             </a>
                         </label>
+                        <!-- Item action buttons -->
                         <div class="item-actions">
                             <a href="#" class="btn btn-link btn-sm p-0 me-2 item-detail-link" 
                                title="Upravit položku"
@@ -71,6 +100,7 @@
         {% endfor %}
     </div>
     
+    <!-- Delete all button -->
     {% if itemsList %}
     <div class="text-center mt-5">
         <a href="{% url 'deleteall' %}" class="btn btn-outline-danger rounded-pill px-4">Vymazat vše</a>
@@ -78,6 +108,7 @@
     {% endif %}
     
     {% else %}
+    <!-- Empty list message -->
     <div class="alert alert-info text-center rounded-pill">
         Váš nákupní seznam je prázdný. Přidejte nějaké položky!
     </div>
@@ -86,6 +117,7 @@
 
 <!-- Add Item Modal -->
 <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+    <!-- Modal content for adding new items -->
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -93,6 +125,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <!-- Add item form -->
                 <form id="addItemForm" action="{% url 'add' %}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="mb-3">
@@ -129,6 +162,7 @@
 
 <!-- Edit Item Modal -->
 <div class="modal fade" id="itemDetailModal" tabindex="-1" aria-labelledby="itemDetailModalLabel" aria-hidden="true">
+    <!-- Modal content for editing existing items -->
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -136,6 +170,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <!-- Edit item form -->
                 <form id="editItemForm" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="mb-3">
@@ -182,6 +217,7 @@
 
 <!-- Image Preview Modal -->
 <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-labelledby="imagePreviewModalLabel" aria-hidden="true">
+    <!-- Modal for displaying full-size images -->
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -195,7 +231,9 @@
     </div>
 </div>
 
+<!-- Styles for the shopping list interface -->
 <style>
+    /* Main layout styling */
     body {
         background-color: #F5FFF7;
     }
@@ -204,12 +242,14 @@
         max-width: 1200px;
     }
 
+    /* Categories grid layout */
     .categories-container {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 2rem;
     }
 
+    /* Category section styling */
     .category-section {
         background: white;
         border-radius: 15px;
@@ -222,6 +262,7 @@
         position: relative;
     }
 
+    /* Category-specific color coding */
     .category-header[data-category="dairy"] .category-title {
         background-color: #FFE5BA;
     }
@@ -536,6 +577,8 @@
     }
 </style>
 
+<!-- JavaScript for interactive features -->
+{% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('itemDetailModal');

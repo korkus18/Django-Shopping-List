@@ -1,24 +1,30 @@
-"""shopping_project URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+Main URL Configuration for Shopping List Project
+
+This module defines the root URL configuration for the entire project.
+It includes:
+- Admin interface URLs
+- Shopping list application URLs
+- Media file serving for development
+
+The URL patterns are structured to provide a clean and intuitive URL scheme,
+with the shopping list application handling the root URL ('/').
+"""
+
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Main URL patterns
 urlpatterns = [
+    # Django admin interface
     path('admin/', admin.site.urls),
+    
+    # Shopping list application - handles all main URLs
     path("", include("shopping_list.urls"))
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+# Add media file serving for development
+# In production, these should be served by the web server
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
