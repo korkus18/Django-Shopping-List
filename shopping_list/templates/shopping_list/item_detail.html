@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ item.itemname }} - Details{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h2 class="mb-0">{{ item.itemname }}</h2>
+                    {% if item.completed %}
+                    <span class="badge bg-success">Completed</span>
+                    {% endif %}
+                </div>
+                
+                {% if item.image %}
+                <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.itemname }}" style="max-height: 400px; object-fit: cover;">
+                {% endif %}
+                
+                <div class="card-body">
+                    {% if item.description %}
+                    <h5 class="card-title">Description:</h5>
+                    <p class="card-text">{{ item.description }}</p>
+                    {% endif %}
+                    
+                    <p class="text-muted">Added on: {{ item.date_added|date:"F j, Y, g:i a" }}</p>
+                    
+                    <div class="mt-4">
+                        {% if not item.completed %}
+                        <a href="{% url 'complete' item.id %}" class="btn btn-success me-2">Mark as Complete</a>
+                        {% endif %}
+                        <a href="{% url 'edit_item' item.id %}" class="btn btn-primary me-2">Edit</a>
+                        <a href="{% url 'deleteitem' item.id %}" class="btn btn-danger me-2">Delete</a>
+                        <a href="{% url 'index' %}" class="btn btn-secondary">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
