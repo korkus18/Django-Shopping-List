@@ -1,93 +1,191 @@
-````markdown
-# 🍎 Django Shopping List
+# 🛒 Nákupní Seznam v Django
 
-Jednoduchá webová aplikace pro správu nákupního seznamu, vytvořená v Django.
+Moderní webová aplikace pro správu nákupního seznamu vytvořená v Django frameworku. Aplikace nabízí intuitivní uživatelské rozhraní s příjemným designem a kompletní správou položek nákupního seznamu.
 
-## 📦 Funkce
-- Přidávání položek do nákupního seznamu
-- Označení položek jako "koupené"
-- Mazání položek
-- Uživatelské rozhraní postavené na Django templates
+## 📸 Ukázky aplikace
 
----
+### Hlavní stránka
+![Hlavní stránka](.github/images/main.png)
+Hlavní stránka aplikace zobrazuje přehledně organizovaný nákupní seznam rozdělený do kategorií:
+- Mléčné výrobky
+- Ovoce a zelenina
+- Mražené potraviny
+- Hotová jídla
+- Pečivo
+- Ostatní
 
-## ⚙️ Lokální spuštění
+### Přidání a úprava položek
+![Přidání položky](.github/images/add-item.png)
+![Úprava položky](.github/images/edit-item.png)
+Modální okna pro přidání nové položky a úpravu existující položky s možností:
+- Zadání názvu
+- Výběr kategorie
+- Nahrání obrázku
+- Označení jako dokončené
 
-### 1. Klonuj nebo stáhni projekt
+### Přihlášení a registrace
+![Přihlášení](.github/images/login.png)
+![Registrace](.github/images/register.png)
+Přehledné přihlašovací a registrační formuláře s moderním designem.
 
+## 🌟 Hlavní funkce
+
+- **Správa položek**
+  - Přidávání nových položek s obrázky
+  - Kategorizace položek (mléčné výrobky, ovoce a zelenina, atd.)
+  - Označování položek jako dokončené
+  - Mazání jednotlivých položek nebo celého seznamu
+
+- **Uživatelský systém**
+  - Registrace nových uživatelů
+  - Přihlášení/odhlášení
+  - Oddělené seznamy pro každého uživatele
+
+- **Moderní UI/UX**
+  - Responzivní design
+  - Příjemné mátové barevné schéma
+  - Animace a přechody
+  - Modální okna pro akce
+
+## 🏗 Architektura
+
+Projekt využívá standardní Django architekturu s rozdělením na projekt a aplikaci:
+
+```
+django-shopping-list/
+│
+├── shopping_project/          # Hlavní projekt
+│   ├── settings.py           # Nastavení projektu
+│   ├── urls.py               # Hlavní URL konfigurace
+│   └── wsgi.py              # WSGI konfigurace
+│
+├── shopping_list/            # Hlavní aplikace
+│   ├── models.py            # Databázové modely
+│   ├── views.py             # View logika
+│   ├── urls.py              # URL patterns aplikace
+│   ├── templatetags/        # Vlastní template tagy
+│   ├── management/          # Management příkazy
+│   ├── static/              # Statické soubory
+│   └── templates/           # HTML šablony
+│
+├── templates/                # Globální šablony
+│   ├── base.html           # Základní šablona
+│   └── registration/       # Autentizační šablony
+│
+├── media/                    # Uploadované soubory
+├── venv/                     # Virtuální prostředí
+├── requirements.txt          # Python závislosti
+├── manage.py                # Django CLI
+└── db.sqlite3               # SQLite databáze
+```
+
+## 💾 Databázový model
+
+- **ShoppingItem**
+  - `itemname`: název položky
+  - `completed`: stav dokončení
+  - `date_added`: datum přidání
+  - `category`: kategorie položky
+  - `image`: obrázek položky (volitelné)
+  - `user`: vazba na uživatele
+
+## 🚀 Instalace a spuštění
+
+### Požadavky
+- Python 3.8 nebo vyšší
+- pip (Python package manager)
+- Virtuální prostředí (doporučeno)
+
+### 1. Klonování repozitáře
 ```bash
 git clone https://github.com/korkus18/Django-Shopping-List.git
-cd shoppping_list-list
+cd django-shopping-list
 ```
 
-> Pokud máš ZIP, tak ho stačí rozbalit a přejít do složky.
-
----
-
-### 2. Vytvoř a aktivuj virtuální prostředí
-
+### 2. Vytvoření virtuálního prostředí
 ```bash
+# Vytvoření
 python3 -m venv venv
-source venv/bin/activate  # macOS/Linux
-venv\Scripts\activate     # Windows
+
+# Aktivace na macOS/Linux
+source venv/bin/activate
+
+# Aktivace na Windows
+venv\Scripts\activate
 ```
 
----
-
-### 3. Nainstaluj závislosti
-
+### 3. Instalace závislostí
 ```bash
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
----
-
-### 4. Migrace databáze
-
+### 4. Konfigurace prostředí
 ```bash
+# Vytvoření a aplikace migrací
+python manage.py makemigrations
 python manage.py migrate
-```
 
----
-
-### 5. Vytvoř admin účet
-
-```bash
+# Vytvoření superuživatele
 python manage.py createsuperuser
 ```
 
-Zadej jméno, e-mail a heslo.
-
----
-
-### 6. Spusť server
-
+### 5. Spuštění vývojového serveru
 ```bash
 python manage.py runserver
 ```
 
-Otevři [http://127.0.0.1:8000](http://127.0.0.1:8000) ve svém prohlížeči.
+Aplikace bude dostupná na http://127.0.0.1:8000
 
----
+## 👩‍💻 Použití
 
-## 💡 Tipy
+1. **Registrace/Přihlášení**
+   - Navštivte hlavní stránku
+   - Klikněte na "Registrovat se" pro vytvoření účtu
+   - Přihlaste se pomocí vytvořených údajů
 
-- Admin rozhraní: [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)
+2. **Přidání položky**
+   - Klikněte na "Přidat položku"
+   - Vyplňte název a vyberte kategorii
+   - Volitelně přidejte obrázek
+   - Potvrďte přidání
 
----
+3. **Správa položek**
+   - Označte položku jako dokončenou kliknutím na checkbox
+   - Upravte položku kliknutím na její název
+   - Smažte položku pomocí ikony koše
+   - Vyčistěte celý seznam pomocí "Vymazat vše"
 
-## 📁 Struktura
+## 🛠 Vývoj
 
-```
-django-shopping-list/
-│
-├── shopping_list/         # Aplikace s nákupním seznamem
-├── shopping_project/      # Projektové nastavení
-├── db.sqlite3             # SQLite databáze
-├── requirements.txt
-└── manage.py
-```
+### Struktura kódu
+- Views používají class-based přístup
+- Šablony dědí z base.html
+- Statické soubory jsou organizovány podle typu
 
----
+### Přidání nové funkcionality
+1. Vytvořte novou větev pro vaši funkci
+2. Implementujte změny v příslušných souborech
+3. Přidejte testy
+4. Vytvořte pull request
+
+## 🔍 API Endpoints
+
+- `/` - Hlavní stránka s seznamem
+- `/login/` - Přihlášení
+- `/register/` - Registrace
+- `/logout/` - Odhlášení
+- `/add/` - Přidání položky
+- `/edit/<id>/` - Úprava položky
+- `/delete/<id>/` - Smazání položky
+- `/complete/<id>/` - Označení položky jako dokončené
+- `/admin/` - Administrační rozhraní
+
+## 📝 Licence
+
+Tento projekt je licencován pod MIT licencí.
+
+## 👥 Autoři
+
+- [@korkus18](https://github.com/korkus18) - Hlavní vývojář
 
