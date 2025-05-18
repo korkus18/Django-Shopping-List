@@ -4,7 +4,15 @@ Moderní webová aplikace pro správu nákupního seznamu vytvořená v Django f
 
 ## 📸 Ukázky aplikace
 
-### Hlavní stránka
+### Přihlašovací obrazovka
+![Přihlašovací obrazovka](.github/images/login.png)
+Přehledné přihlašovací rozhraní s moderním designem pro snadný přístup do aplikace.
+
+### Přidání nové položky
+![Přidání položky](.github/images/add-item.png)
+Modální okno pro přidání nové položky do nákupního seznamu s možností výběru kategorie a nahrání obrázku.
+
+### Hlavní přehled
 ![Hlavní stránka](.github/images/main.png)
 Hlavní stránka aplikace zobrazuje přehledně organizovaný nákupní seznam rozdělený do kategorií:
 - Mléčné výrobky
@@ -14,19 +22,13 @@ Hlavní stránka aplikace zobrazuje přehledně organizovaný nákupní seznam r
 - Pečivo
 - Ostatní
 
-### Přidání a úprava položek
-![Přidání položky](.github/images/add-item.png)
-![Úprava položky](.github/images/edit-item.png)
-Modální okna pro přidání nové položky a úpravu existující položky s možností:
-- Zadání názvu
-- Výběr kategorie
-- Nahrání obrázku
-- Označení jako dokončené
+### Detail položky
+![Detail položky](.github/images/detail.png)
+Detailní zobrazení položky s možností úpravy všech parametrů včetně kategorie a obrázku.
 
-### Přihlášení a registrace
-![Přihlášení](.github/images/login.png)
+### Registrace
 ![Registrace](.github/images/register.png)
-Přehledné přihlašovací a registrační formuláře s moderním designem.
+Registrační formulář pro vytvoření nového účtu s intuitivním rozhraním.
 
 ## 🌟 Hlavní funkce
 
@@ -187,5 +189,5 @@ Tento projekt je licencován pod MIT licencí.
 
 ## 👥 Autoři
 
-- [@korkus18](https://github.com/korkus18) - Hlavní vývojář
+- [@korkus18](https://github.com/korkus18) 
 
