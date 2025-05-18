@@ -1,3 +1,14 @@
+"""
+Shopping List Views Module
+
+This module contains all the view functions for the shopping list application.
+It handles user authentication, CRUD operations for shopping list items,
+and various utility functions for managing the shopping list.
+
+The views support both regular HTTP requests and AJAX calls, providing
+appropriate responses based on the request type.
+"""
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
@@ -14,6 +25,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 def register(request):
+	"""
+	Handle user registration.
+	
+	Processes both GET (registration form) and POST (form submission) requests.
+	On successful registration, logs in the user and redirects to the index page.
+	"""
 	if request.method == 'POST':
 		form = UserCreationForm(request.POST)
 		if form.is_valid():
@@ -27,6 +44,13 @@ def register(request):
 
 @login_required
 def index(request):
+	"""
+	Display the main shopping list page.
+	
+	Shows all shopping items grouped by their categories.
+	Only displays non-empty categories and includes category translations.
+	Requires user authentication.
+	"""
 	# Get all items and group them by category
 	all_items = ItemsList.objects.filter(user=request.user)
 	items_by_category = {
@@ -58,6 +82,13 @@ def index(request):
 
 @login_required
 def addItem(request):
+	"""
+	Add a new shopping list item.
+	
+	Handles POST requests for creating new items.
+	Supports both regular form submissions and AJAX requests.
+	Can handle image uploads and validates required fields.
+	"""
 	if request.method == 'POST':
 		item_name = request.POST.get('item', '').strip()
 		category = request.POST.get('category', 'other')
@@ -116,13 +147,22 @@ def addItem(request):
 
 @login_required
 def item_detail(request, item_id):
+	"""
+	Display detailed information about a specific shopping list item.
+	
+	Shows all item attributes and allows for viewing the full image if present.
+	"""
 	item = get_object_or_404(ItemsList, id=item_id, user=request.user)
 	return render(request, 'shopping_list/item_detail.html', {'item': item})
 
 @login_required
 def edit_item(request, item_id):
 	"""
-	View for handling item editing
+	Handle item editing functionality.
+	
+	Supports both GET (form display) and POST (update) requests.
+	Handles image uploads and deletions.
+	Validates input data and provides appropriate error messages.
 	"""
 	try:
 		item = get_object_or_404(ItemsList, id=item_id, user=request.user)
@@ -210,6 +250,12 @@ def edit_item(request, item_id):
 
 @login_required
 def completeItem(request, item_id):
+	"""
+	Mark a shopping list item as completed.
+	
+	Updates the completed status of an item and redirects back to the index page.
+	Only allows users to complete their own items.
+	"""
 	try:
 		item = ItemsList.objects.get(id=item_id)
 		if item.user == request.user:
@@ -222,6 +268,12 @@ def completeItem(request, item_id):
 
 @login_required
 def deleteItem(request, item_id):
+	"""
+	Delete a specific shopping list item.
+	
+	Removes both the item record and any associated image file.
+	Only allows users to delete their own items.
+	"""
 	try:
 		item = ItemsList.objects.get(id=item_id)
 		if item.user == request.user:
@@ -235,6 +287,12 @@ def deleteItem(request, item_id):
 
 @login_required
 def deleteAll(request):
+	"""
+	Delete all shopping list items for the current user.
+	
+	Removes all items and their associated image files.
+	Provides feedback through a success message.
+	"""
 	items = ItemsList.objects.filter(user=request.user)
 	for item in items:
 		if item.image:
