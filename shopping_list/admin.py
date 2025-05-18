@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from .models import ShoppingList
+from .models import ItemsList
 
-admin.site.register(ShoppingList)
+admin.site.register(ItemsList)

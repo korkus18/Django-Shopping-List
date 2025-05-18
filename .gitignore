@@ -11,8 +11,6 @@ db.sqlite3
 *.pot
 *.pyc
 media/
-staticfiles/
-static/
 .env
 
 # Virtualenv
